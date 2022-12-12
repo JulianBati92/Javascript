@@ -43,16 +43,16 @@ const productosAgregados = [
     {id:10, mate: "acero", modelo: "bombilla", precio: 1500, stock: 40},
 ];
 
-//  listaProductos.forEach((producto)=> {
-//      console.log(`este ${producto.modelo} ${producto.mate} y el precio es $${producto.precio}`)
-//  })
+  listaProductos.forEach((producto)=> {
+      console.log(`este ${producto.modelo} ${producto.mate} y el precio es $${producto.precio}`)
+  })
 
 let busquedaUsuario = prompt("que modelo queres buscar?")
 const busqueda = listaProductos.find (producto => producto.mate == busquedaUsuario);
 console.log (busqueda)
 
 let filtraPorPrecio = prompt("que precio?")
-const filtra = listaProductos.filter (producto => producto.precio > 1500);
+const filtra = listaProductos.filter (producto => producto.precio > 1600);
 console.log (filtra)
 
 let crearProducto = () => {
