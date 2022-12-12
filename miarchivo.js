@@ -30,7 +30,7 @@ class Productos {
         this.precio = precio;
     }
 }
-let productosAgregados = [
+const productosAgregados = [
     {id:1, mate: "set completo", modelo: "set", precio: 1000, stock:3},
     {id:2, mate: "plata 925 crem", modelo: "imperial", precio: 2850, stock: 8},
     {id:3, mate: "plata 925 blanco", modelo: "imperial", precio: 2600, stock: 15},
@@ -43,16 +43,16 @@ let productosAgregados = [
     {id:10, mate: "acero", modelo: "bombilla", precio: 1500, stock: 40},
 ];
 
-listaProductos.forEach((producto)=> {
-    console.log(`este ${producto.modelo} ${producto.mate} y el precio es $${producto.precio}`)
-})
+//  listaProductos.forEach((producto)=> {
+//      console.log(`este ${producto.modelo} ${producto.mate} y el precio es $${producto.precio}`)
+//  })
 
 let busquedaUsuario = prompt("que modelo queres buscar?")
-const busqueda = listaProductos.find(producto => producto.mate == busquedaUsuario);
+const busqueda = listaProductos.find (producto => producto.mate == busquedaUsuario);
 console.log (busqueda)
 
 let filtraPorPrecio = prompt("que precio?")
-const filtra = listaProductos.filter(producto => producto.precio > 1500);
+const filtra = listaProductos.filter (producto => producto.precio > 1500);
 console.log (filtra)
 
 let crearProducto = () => {
@@ -80,5 +80,3 @@ let pintarHTML = () => {
         }
     })
 }
-
-
