@@ -52,7 +52,7 @@ const busqueda = listaDeProductos.find (producto => producto.mate == busquedaUsu
 console.log (busqueda)
 
 let filtraPorPrecio = prompt("que precio?")
-const filtra = listaDeProductos.filter (producto => producto.precio > 1600);
+const filtra = listaDeProductos.filter (producto => producto.precio > 1000);
 console.log (filtra)
 
 let crearProducto = () => {
