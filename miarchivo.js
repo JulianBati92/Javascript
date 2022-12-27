@@ -1,35 +1,43 @@
-function Saludar () {
-    let nombre = prompt ('Como es tu nombre?');
-    let apellido = prompt ('Como es tu apellido?')
-    alert ("Tomamos unos mates? " + nombre + " " + apellido );
+function saludar() {
+  let nombre = prompt('¿Cuál es tu nombre?');
+  let apellido = prompt('¿Cuál es tu apellido?');
 
- let entrada = prompt("Ingresar tus redes sociales");
- while(entrada != ""){
-   switch (entrada) {
+  alert(`Hola ${nombre} ${apellido}, ¿tomamos unos mates?`);
+
+  let entrada = prompt('Ingresar tus redes sociales');
+
+  while (entrada !== "") {
+    switch (entrada) {
       case "instagram.com/":
-           alert("Gracias por ingresar tu instagram, tenes un 20% off ingresando el codigo MATTEOLIIG en la tienda online");
-           break;
+        alert("Gracias por ingresar tu instagram, tienes un 20% de descuento ingresando el código MATTEOLIIG en la tienda online");
+        break;
       case "facebook.com/":
-           alert("Gracias por ingresar tu facebook, tenes un 20% off ingresando el codigo MATTEOLIFB en la tienda online");
-           break;
+        alert("Gracias por ingresar tu facebook, tienes un 20% de descuento ingresando el código MATTEOLIFB en la tienda online");
+        break;
       default:
+        if (entrada.includes(".")) {
+          alert("Gracias por ingresar tu red social, tienes un 10% de descuento ingresando el código MATTEOLI en la tienda online");
+        } else {
           alert("Gracias por tu tiempo!!!")
-          break;
-  }
-  entrada = prompt("Ingresar tus redes sociales");
+        }
+        break;
+    }
+
+    entrada = prompt("Ingresar tus redes sociales");
   }
 }
 
-Saludar ()
+saludar();
 
 
 class Productos {
     constructor(mate, modelo, precio) {
-        this.mate = mate;
-        this.modelo = modelo;
-        this.precio = precio;
+      this.mate = mate;
+      this.modelo = modelo;
+      this.precio = precio;
     }
 }
+
 const listaDeProductos = [
     {id:1, mate: "set completo", modelo: "set", precio: 1000, stock:3},
     {id:2, mate: "plata 925 crem", modelo: "imperial", precio: 2850, stock: 8},
@@ -43,9 +51,12 @@ const listaDeProductos = [
     {id:10, mate: "acero", modelo: "bombilla", precio: 1500, stock: 40},
 ];
 
-  listaDeProductos.forEach((producto)=> {
-      console.log(`este ${producto.modelo} ${producto.mate} y el precio es $${producto.precio}`)
-  })
+localStorage.setItem("listaDeProductos", JSON.stringify(listaDeProductos));
+const listaDeProductos = JSON.parse(localStorage.getItem("listaDeProductos"));
+
+listaDeProductos.forEach((producto)=> {
+    console.log(`este ${producto.modelo} ${producto.mate} y el precio es $${producto.precio}`)
+})
 
 let busquedaUsuario = prompt("que modelo queres buscar?")
 const busqueda = listaDeProductos.find (producto => producto.mate == busquedaUsuario);
@@ -80,3 +91,20 @@ let pintarHTML = () => {
         }
     })
 }
+
+const div = document.createElement('div');
+div.innerHTML = '<p>Se agrega una nueva division</p>';
+document.body.appendChild(div);
+
+const contenedor = document.querySelector('.contenedor');
+
+function mostrarProductos() {
+  let html = prompt ('Mate?');
+  listaDeProductos.forEach(producto => {
+    html += `<p>${producto.mate}</p>`;
+  });
+  contenedor.innerHTML = html;
+}
+
+mostrarProductos();
+
