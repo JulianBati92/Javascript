@@ -96,7 +96,19 @@ const div = document.createElement('div');
 div.innerHTML = '<p>Se agrega una division</p>';
 document.body.appendChild(div);
 
-const contenedor = document.querySelector('#contenedor');
+
+
+let contenedor = document.querySelector("#contenedor");
+
+if (contenedor) {
+
+contenedor.innerHTML = "Contenido nuevo del contenedor";
+
+  }
+
+
+
+
 
 function mostrarProductos() {
   let html = prompt ('Mate?');
