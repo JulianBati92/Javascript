@@ -51,7 +51,7 @@ let listaDeProductos = [
     {id:10, mate: "acero", modelo: "bombilla", precio: 1500, stock: 40},
 ];
 
-let listaDeProductosDesdeStorage = JSON.parse(localStorage.getItem("listaDeProductos"));
+
 const listaDeProducto = JSON.parse(localStorage.getItem("listaDeProductos"));
 
 listaDeProductos.forEach((producto)=> {
@@ -96,7 +96,7 @@ const div = document.createElement('div');
 div.innerHTML = '<p>Se agrega una division</p>';
 document.body.appendChild(div);
 
-const contenedor = document.querySelector('.contenedor');
+const contenedor = document.querySelector('#contenedor');
 
 function mostrarProductos() {
   let html = prompt ('Mate?');
