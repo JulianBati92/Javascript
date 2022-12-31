@@ -6,7 +6,7 @@ function saludar() {
 
   let entrada = prompt('Ingresar tus redes sociales');
 
-  while (entrada !== "") {
+  while (entrada) {
     switch (entrada) {
       case "instagram.com/":
         alert("Gracias por ingresar tu instagram, tienes un 20% de descuento ingresando el código MATTEOLIIG en la tienda online");
@@ -38,7 +38,7 @@ class Productos {
     }
 }
 
-const listaDeProductos = [
+let listaDeProductos = [
     {id:1, mate: "set completo", modelo: "set", precio: 1000, stock:3},
     {id:2, mate: "plata 925 crem", modelo: "imperial", precio: 2850, stock: 8},
     {id:3, mate: "plata 925 blanco", modelo: "imperial", precio: 2600, stock: 15},
@@ -51,8 +51,8 @@ const listaDeProductos = [
     {id:10, mate: "acero", modelo: "bombilla", precio: 1500, stock: 40},
 ];
 
-localStorage.setItem("listaDeProductos", JSON.stringify(listaDeProductos));
-const listaDeProductos = JSON.parse(localStorage.getItem("listaDeProductos"));
+let listaDeProductosDesdeStorage = JSON.parse(localStorage.getItem("listaDeProductos"));
+const listaDeProducto = JSON.parse(localStorage.getItem("listaDeProductos"));
 
 listaDeProductos.forEach((producto)=> {
     console.log(`este ${producto.modelo} ${producto.mate} y el precio es $${producto.precio}`)
@@ -93,7 +93,7 @@ let pintarHTML = () => {
 }
 
 const div = document.createElement('div');
-div.innerHTML = '<p>Se agrega una nueva division</p>';
+div.innerHTML = '<p>Se agrega una division</p>';
 document.body.appendChild(div);
 
 const contenedor = document.querySelector('.contenedor');
