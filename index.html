@@ -7,23 +7,30 @@
     <title>Pre Entrega 3 - Batistutti</title>
 </head>
 <body>
-    <center><h1 id="titulo">TU MATTEOLI</h1></center>
+        <script src="./miarchivo.js"></script>
+    <center><h1 id="titulo">BIENVENIDO A TU MATTEOLI!!!</h1></center>
     <center><a href="https://julianbati92.github.io/PF-Batistutti/index.html">Pagina OFICIAL</a></center>
     <br>
-    <center> <form id="formulario">
-        <input type="text" id="text" />
-        <select id="materias">
-            <option>Mates</option>
-            <option>Bombillas</option>
-            <option>Set</option>
-        </select>
-        <button id="btn">Escribir</button>
-    </form></center>
+    <center> <div id="contenedor">
+              <form id="formulario">
+                <label for="mate">Mate:</label>
+                <input type="text" id="mate" name="mate">
+                <br>
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" name="modelo">
+                <br>
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio">
+                <br>
+                <input type="submit" value="Añadir producto">
+              </form>
+              <button id="filtrarPrecio">Filtrar por precio</button>
+              <button id="buscarModelo">Buscar por modelo</button>
+            </div></center>
     <div>
        <center><h1>Copate con nuestros productos!!! Tenemos la mayor variedad de mates, termos y bombillas. Descubre y explora nuestras categorías de productos y elegí el combo matero ideal para vos!</h1></center>    
     </div>
     <center><p class="parrafo">“No dejes para mañana los mates que puedas tomar hoy”</p></center>
 
-    <script src="./miarchivo.js"></script>
 </body>
 </html>
