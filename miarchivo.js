@@ -52,7 +52,7 @@ let listaDeProductos = [
 ];
 
 
-const listaDeProducto = JSON.parse(localStorage.getItem("listaDeProductos"));
+const listaDeProductosDesdeStorage = JSON.parse(localStorage.getItem("listaDeProductos"));
 
 listaDeProductos.forEach((producto)=> {
     console.log(`este ${producto.modelo} ${producto.mate} y el precio es $${producto.precio}`)
