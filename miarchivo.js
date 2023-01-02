@@ -100,5 +100,3 @@ let contenedor = document.querySelector("#contenedor");
 if (contenedor) {
 contenedor.innerHTML = "Contenido nuevo del contenedor";
   }
-
-mostrarProductos();
