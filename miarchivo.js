@@ -10,17 +10,17 @@ function saludar() {
     switch (entrada) {
       case "instagram.com/":
         alert("Gracias por ingresar tu instagram, tienes un 20% de descuento ingresando el código MATTEOLIIG en la tienda online");
-        break;
+        return;
       case "facebook.com/":
         alert("Gracias por ingresar tu facebook, tienes un 20% de descuento ingresando el código MATTEOLIFB en la tienda online");
-        break;
+        return;
       default:
         if (entrada.includes(".")) {
           alert("Gracias por ingresar tu red social, tienes un 10% de descuento ingresando el código MATTEOLI en la tienda online");
         } else {
           alert("Gracias por tu tiempo!!!")
         }
-        break;
+        return;
     }
 
     entrada = prompt("Ingresar tus redes sociales");
