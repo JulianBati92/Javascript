@@ -103,18 +103,27 @@ contenedor.innerHTML = "Contenido nuevo del contenedor";
 
 function mostrarProductos() {
   let html = prompt ('Mate?');
-  listaDeProductos.forEach(producto => {
-    html += `<p>${producto.mate}</p>`;
+  listaDeProductos.forEach((producto) => {
+    html += `
+      <div class="producto">
+        <h3>${producto.mate}</h3>
+        <p>Modelo: ${producto.modelo}</p>
+        <p>Precio: $${producto.precio}</p>
+      </div>
+    `;
   });
-  contenedor.innerHTML = html;
+
+  let contenedor = document.querySelector('#mi-contenedor');
+  if (contenedor) {
+    contenedor.innerHTML = html;
+  } else {
+    console.error('El contenedor no existe');
+  }
 }
 
 mostrarProductos();
 
-let elemento = document.querySelector('#mi-elemento');
 
-if (elemento) {
-  elemento.innerHTML = 'Nuevo contenido';
-} else {
-  console.error('El elemento no existe');
-}
+
+
+
