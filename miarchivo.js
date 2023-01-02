@@ -59,7 +59,7 @@ listaDeProductos.forEach((producto)=> {
 })
 
 let busquedaUsuario = prompt("que modelo queres buscar?")
-const busqueda = listaDeProductos.find (producto => producto.mate == busquedaUsuario);
+const busqueda = listaDeProductos.find (producto => producto.modelo == busquedaUsuario);
 console.log (busqueda)
 
 let filtraPorPrecio = prompt("que precio?")
