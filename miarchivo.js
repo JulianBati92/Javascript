@@ -110,3 +110,11 @@ function mostrarProductos() {
 }
 
 mostrarProductos();
+
+let elemento = document.querySelector('#mi-elemento');
+
+if (elemento) {
+  elemento.innerHTML = 'Nuevo contenido';
+} else {
+  console.error('El elemento no existe');
+}
