@@ -101,24 +101,4 @@ if (contenedor) {
 contenedor.innerHTML = "Contenido nuevo del contenedor";
   }
 
-function mostrarProductos() {
-  let html = prompt ('Mate?');
-  listaDeProductos.forEach((producto) => {
-    productoshtml += `
-      <div class="producto">
-        <h3>${producto.mate}</h3>
-        <p>Modelo: ${producto.modelo}</p>
-        <p>Precio: $${producto.precio}</p>
-      </div>
-    `;
-  });
-
-  let contenedor = document.querySelector('#mi-contenedor');
-  if (contenedor) {
-    contenedor.innerHTML = html;
-  } else {
-    console.error('El contenedor no existe');
-  }
-}
-
 mostrarProductos();
