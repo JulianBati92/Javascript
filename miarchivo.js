@@ -104,7 +104,7 @@ contenedor.innerHTML = "Contenido nuevo del contenedor";
 function mostrarProductos() {
   let html = prompt ('Mate?');
   listaDeProductos.forEach((producto) => {
-    html += `
+    productoshtml += `
       <div class="producto">
         <h3>${producto.mate}</h3>
         <p>Modelo: ${producto.modelo}</p>
