@@ -73,7 +73,7 @@ let crearProducto = () => {
 
     let mateNuevo = new Productos(mate, modelo, precio);
     productosAgregados.push(mateNuevo);
-    return productosAgregados
+    mostrarProductos();
 }
 
 let pintarHTML = () => {
@@ -122,8 +122,3 @@ function mostrarProductos() {
 }
 
 mostrarProductos();
-
-
-
-
-
