@@ -128,5 +128,5 @@ const calcularTotalCompra = () => {
   carrito.forEach((producto) => {
     totalCompra += producto.precio;
   });
-  document.getElementById('totalCompra').innerHTML = `Total: $${totalCompra}`;
+  document.getElementById('totalCompra').innerHTML = `$${totalCompra}`;
 };
