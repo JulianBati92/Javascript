@@ -31,7 +31,7 @@ const productos = [
 function getProductos() {
   return fetch("productos.json")
   .then(response => response.json())
-  .catch(error => console.error(error))
+  .then(error => console.error(error))
 }
 
 //Funcion para obtener los productos de la API:
