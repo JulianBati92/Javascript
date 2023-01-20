@@ -25,7 +25,7 @@ let productos = [];
 
 function getProductosFromAPI() {
   const apiKey = "MI_CONTRASENA";
-    get('./products.json')
+    get ("productos.json")
     .then((response) => {
       productos = response.data.data.map((producto) => {
         return new Producto(
