@@ -36,7 +36,7 @@ function getProductos() {
 
 //Funcion para obtener los productos de la API:
 
-function getProductos() {
+function getProductosFromAPI() {
   const apiKey = "MI_CONTRASENA";
   return fetch(`https://miapi.com/api/products?api_key=${apiKey}`)
   .then(response => response.json())
