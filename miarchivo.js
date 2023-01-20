@@ -19,6 +19,8 @@ function getProductos() {
   .then(data => console.log(data))
 }
 
+let productos = [];
+
 //Funcion para obtener los productos de la API:
 
 function getProductosFromAPI() {
