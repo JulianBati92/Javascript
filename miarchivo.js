@@ -14,17 +14,44 @@ class Producto {
 //Creo productos y los almaceno en un array:
 
 const productos = [
-    new Producto(1, 'set completo matero', 1000, 3),
-    new Producto(2, 'imperial 925 cream', 2850, 8),
-    new Producto(3, 'imperial 926 blanco', 2600, 15),
-    new Producto(4, 'imperial rosalia', 2500, 10),
-    new Producto(5, 'torpedo beige', 2200, 22),
-    new Producto(6, 'imperial blanco', 2500, 7),
-    new Producto(7, 'camionero cream', 2300, 18),
-    new Producto(8, 'imperial negro', 2500, 1),
-    new Producto(9, 'bombilla alpaca', 1900, 23),
-    new Producto(10,'bombilla acero', 1500, 40),
+    new Producto(1, 'SET MATTEOLI', 10000, 3),
+    new Producto(2, 'IMPERIAL 925 CREAM', 2850, 8),
+    new Producto(3, 'IMPERIAL 925 BLANCO', 2600, 15),
+    new Producto(4, 'IMPERIAL ROSALIA', 2500, 10),
+    new Producto(5, 'TORPEDO BEIGE', 2200, 22),
+    new Producto(6, 'IMPERIAL BLANCO', 2500, 7),
+    new Producto(7, 'CAMIONERO CREAM', 2300, 18),
+    new Producto(8, 'IMPERIAL NEGRO', 2500, 1),
+    new Producto(9, 'BOMBILLA ALPACA', 1900, 23),
+    new Producto(10,'BOMBILLA ACERO', 1500, 40),
 ];
+
+//Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
+
+function getProductos() {
+  return fetch("productos.json")
+  .then(response => response.json())
+  .catch(error => console.error(error))
+}
+
+//Funcion para obtener los productos de la API:
+
+function getProductos() {
+  const apiKey = "MI_CONTRASENA";
+  return fetch(`https://miapi.com/api/products?api_key=${apiKey}`)
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === "success") {
+      const productos = data.data.map(producto => {
+        return new Producto(producto.id, producto.nombre, producto.precio, producto.cantidad);
+      });
+      return productos;
+    } else {
+      console.error(data.message);
+    }
+  })
+  .catch(error => console.error(error))
+}
 
 // Almacenar los productos en el local storage:
 
