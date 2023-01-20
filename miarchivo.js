@@ -11,27 +11,12 @@ class Producto {
   }
 }
 
-//Creo productos y los almaceno en un array:
-
-const productos = [
-    new Producto(1, 'SET MATTEOLI', 10000, 3),
-    new Producto(2, 'IMPERIAL 925 CREAM', 2850, 8),
-    new Producto(3, 'IMPERIAL 925 BLANCO', 2600, 15),
-    new Producto(4, 'IMPERIAL ROSALIA', 2500, 10),
-    new Producto(5, 'TORPEDO BEIGE', 2200, 22),
-    new Producto(6, 'IMPERIAL BLANCO', 2500, 7),
-    new Producto(7, 'CAMIONERO CREAM', 2300, 18),
-    new Producto(8, 'IMPERIAL NEGRO', 2500, 1),
-    new Producto(9, 'BOMBILLA ALPACA', 1900, 23),
-    new Producto(10,'BOMBILLA ACERO', 1500, 40),
-];
-
 //Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
 
 function getProductos() {
   return fetch("productos.json")
   .then(response => response.json())
-  .then(error => console.error(error))
+  .then(error => console.log(error))
 }
 
 //Funcion para obtener los productos de la API:
@@ -64,10 +49,26 @@ const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 //Muestro los productos modificando el DOM.
 
 const contenedorProductos = document.getElementById('contenedorProductos');
+
+productosRecuperados.forEach((producto) => {
+  contenedorProductos.innerHTML += `
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">${producto.nombre}</h5>
+                <p class="card-text">Precio: ${producto.precio}</p>
+                <p class="card-text">Cantidad: ${producto.cantidad}</p>
+            </div>
+        </div>
+    </div>
+  `;
+});
+
 const contenedorCarrito = document.getElementById('contenedorCarrito');
 const verCarritoBtn = document.getElementById('verCarrito');
 const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
 const totalCompra = document.getElementById('totalCompra');
+const finalizarCompraBtn = document.getElementById('finalizarCompra');
 
 let carrito = [];
 let total = 0;
@@ -160,3 +161,11 @@ mostrarCarrito();
 verCarritoBtn.addEventListener("click", mostrarCarrito);
 vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
 mostrarProductos();
+
+//Finaliza la compra hecha por el cliente y redirije a un html con un mensaje de confirmacion.
+
+function finalizarCompra() {
+  const carrito = JSON.parse(localStorage.getItem('carrito'));
+  localStorage.setItem('comprasRealizadas', JSON.stringify(carrito));
+  window.location.href = "compraRealizada.html";
+}
