@@ -57,7 +57,6 @@ productosRecuperados.forEach((producto) => {
   `;
 });
 
-const contenedorCarrito = document.getElementById('contenedorCarrito');
 const verCarritoBtn = document.getElementById('verCarrito');
 const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
 const totalCompra = document.getElementById('totalCompra');
