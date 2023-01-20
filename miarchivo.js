@@ -16,7 +16,7 @@ class Producto {
 function getProductos() {
   return fetch("productos.json")
   .then(response => response.json())
-  .then(error => console.log(error))
+  .then(error => console.log(data))
 }
 
 //Funcion para obtener los productos de la API:
