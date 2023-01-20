@@ -41,22 +41,8 @@ function getProductosFromAPI() {
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
 //Muestro los productos modificando el DOM.
+
 const contenedorProductos = document.getElementById('contenedorProductos');
-
-productosRecuperados.forEach((producto) => {
-  contenedorProductos.innerHTML += `
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">${producto.nombre}</h5>
-                <p class="card-text">Precio: ${producto.precio}</p>
-                <p class="card-text">Cantidad: ${producto.cantidad}</p>
-            </div>
-        </div>
-    </div>
-  `;
-});
-
 const verCarritoBtn = document.getElementById('verCarrito');
 const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
 const totalCompra = document.getElementById('totalCompra');
