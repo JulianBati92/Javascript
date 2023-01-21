@@ -27,7 +27,7 @@ function getProductosFromAPI() {
   fetch("./productos.json")
     .then((response) => response.json())
     .then((data) => {
-      const productos = data.data.map((producto) => {
+      productos = data.map((producto) => {
         return new Producto(
           producto.id,
           producto.nombre,
@@ -35,8 +35,6 @@ function getProductosFromAPI() {
           producto.cantidad
         );
       });
-      localStorage.setItem('productos', JSON.stringify(productos));
-      mostrarProductos();
     })
     .catch((error) => console.log(error));
 }
@@ -159,3 +157,5 @@ function finalizarCompra() {
   window.location.href = "compraRealizada.html";
 }
 
+getProductosFromAPI();
+mostrarProductos();
