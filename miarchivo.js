@@ -13,6 +13,8 @@ class Producto {
 
 //Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
 
+const url ="./productos.json"
+
 function getProductos() {
   return fetch(url)
   .then(res => res.json())
