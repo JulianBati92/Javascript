@@ -23,19 +23,21 @@ function getProductos() {
 
 //Funcion para obtener los productos de la API:
 
+let productosRecuperados = [];
+
 function getProductosFromAPI() {
   fetch("./productos.json")
     .then((response) => response.json())
     .then((data) => {
-      productosRecuperados = data.data.map((producto) => {
-        return new Producto(
-          producto.id,
-          producto.nombre,
-          producto.precio,
-          producto.cantidad
-        );
-      });
-      mostrarProductos();
+        if(data.data){
+            productosRecuperados = data.data.map((producto) => {
+                return new Producto(producto.id, producto.nombre, producto.precio, producto.cantidad);
+            });
+        }else{
+            productosRecuperados = data.map((producto) => {
+                return new Producto(producto.id, producto.nombre, producto.precio, producto.cantidad);
+            });
+        }
     })
     .catch((error) => console.log(error));
 }
