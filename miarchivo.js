@@ -13,11 +13,17 @@ class Producto {
 
 //Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
 
-const url ="./productos.json"
-
-fetch(url)
-.then(res => res.json())
-.then(data => console.log(data))
+fetch("./productos.json")
+  .then((response) => response.json())
+  .then((data) => {
+    const productos = data.map((producto) => {
+      return new Producto(
+        producto.id,
+        producto.nombre,
+        producto.precio,
+        producto.cantidad
+      );
+    });
 
 //Funcion para obtener los productos de la API:
 
