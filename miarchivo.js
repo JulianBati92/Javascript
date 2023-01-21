@@ -38,7 +38,11 @@ function getProductosFromAPI() {
     })
     .catch((error) => console.log(error));
 }
+
+getProductosFromAPI();
+
 // Recuperar el objeto del local storage:
+
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
 //Muestro los productos modificando el DOM.
