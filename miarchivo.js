@@ -24,19 +24,33 @@ function getProductos() {
 //Funcion para obtener los productos de la API:
 
 function getProductosFromAPI() {
-    get("./productos.json")
-    .then((response) => {
-      productos = response.data.map((producto) => {
-        return new Producto(
-          producto.id,
-          producto.nombre,
-          producto.precio,
-          producto.cantidad
-        );
-      });
+  fetch("./productos.json")
+  .then((response) => {
+    productos = response.data.map((producto) => {
+      return new Producto(
+        producto.id,
+        producto.nombre,
+        producto.precio,
+        producto.cantidad,
+        producto.imagen
+      );
+    });
+
+    productos.forEach(producto => {
+      let productoDiv = document.createElement('div');
+      productoDiv.innerHTML = `
+        <img src="${producto.imagen}" alt="${producto.nombre}">
+        <p>${producto.nombre}</p>
+        <p>$${producto.precio}</p>
+        <button class="btn btn-primary" id="agregarAlCarrito">Agregar al carrito</button>
+      `;
+      contenedorProductos.appendChild(productoDiv);
+    });
     })
     .catch((error) => console.log(error));
-}
+    }
+    
+    
 
 // Recuperar el objeto del local storage:
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
@@ -90,12 +104,11 @@ function agregarAlCarrito(id) {
     producto.cantidad -= 1;
     carrito.push(producto);
     total += producto.precio;
-    totalCompra.innerHTML = total;
+    totalCompra.textContent = total;
   } else {
     alert("No hay mas stock de este Matteoli");
   }
 }
-
 
 // Recorre el array de carrito para crear una vista para cada producto.
 
