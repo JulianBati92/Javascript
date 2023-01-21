@@ -42,7 +42,9 @@ function getProductosFromAPI() {
     .catch((error) => console.log(error));
 }
 
-getProductosFromAPI();
+window.onload = function(){
+    getProductosFromAPI();
+}
 
 // Recuperar el objeto del local storage:
 
@@ -162,5 +164,3 @@ function finalizarCompra() {
   window.location.href = "compraRealizada.html";
 }
 
-getProductosFromAPI();
-mostrarProductos();
