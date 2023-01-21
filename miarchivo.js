@@ -40,7 +40,7 @@ function getProductosFromAPI() {
     productos.forEach(producto => {
       let productoDiv = document.createElement('div');
       productoDiv.innerHTML = `
-        <img src="./img/${producto.imagen}" alt="${producto.nombre}">
+        <img src="${producto.imagen}" alt="${producto.nombre}">
         <p>${producto.nombre}</p>
         <p>$${producto.precio}</p>
         <button class="btn btn-primary" id="agregarAlCarrito">Agregar al carrito</button>
@@ -75,7 +75,7 @@ function crearDivProductos(productos) {
     divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
     divProducto.innerHTML = `
     <div>
-        <img src="./img/${producto.imagen}" alt="${producto.nombre}" class="card-img-top img-fluid py-3">
+        <img src="img/${producto.id}.jpg" class="card-img-top img-fluid py-3">
         <div class="card-body">
             <h5 class="card-title">${producto.nombre}</h5>
             <p class="card-text">$ ${producto.precio}</p>
@@ -120,7 +120,7 @@ carrito.forEach((producto) => {
     divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
     divProducto.innerHTML = `
     <div>
-        <img src="./img/${producto.imagen}" alt="${producto.nombre}" class="card-img-top img-fluid py-3">
+        <img src="img/${producto.id}.jpg" class="card-img-top img-fluid py-3">
         <div class="card-body">
             <h5 class="card-title">${producto.nombre}</h5>
             <p class="card-text">$ ${producto.precio}</p>
