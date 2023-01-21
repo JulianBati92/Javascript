@@ -23,13 +23,10 @@ function getProductos() {
 
 //Funcion para obtener los productos de la API:
 
-let productosRecuperados = [];
-
 function getProductosFromAPI() {
-  const apiKey = "MI_CONTRASENA";
-    get(`https://miapi.com/api/products?api_key=${apiKey}`)
+    get("./productos.json")
     .then((response) => {
-      productos = response.data.data.map((producto) => {
+      productos = response.data.map((producto) => {
         return new Producto(
           producto.id,
           producto.nombre,
@@ -41,15 +38,11 @@ function getProductosFromAPI() {
     .catch((error) => console.log(error));
 }
 
-getProductosFromAPI()
-
 // Recuperar el objeto del local storage:
-
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
 //Muestro los productos modificando el DOM.
 
-const cargarProductosBtn = document.getElementById('cargarProductos');
 const contenedorProductos = document.getElementById('contenedorProductos');
 const verCarritoBtn = document.getElementById('verCarrito');
 const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
@@ -124,7 +117,6 @@ carrito.forEach((producto) => {
 });
 }
 
-
 // Buscar producto en el array de carrito, reduce precio, elimina producto de carrito y actualiza.
 
 function quitarDelCarrito(id) {
@@ -149,7 +141,6 @@ mostrarCarrito();
 verCarritoBtn.addEventListener("click", mostrarCarrito);
 vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
 finalizarCompraBtn.addEventListener('click', finalizarCompra);
-cargarProductosBtn.addEventListener('click', getProductosFromAPI);
 mostrarProductos();
 
 //Finaliza la compra hecha por el cliente.
@@ -159,4 +150,3 @@ function finalizarCompra() {
   localStorage.setItem('comprasRealizadas', JSON.stringify(carrito));
   window.location.href = "compraRealizada.html";
 }
-
