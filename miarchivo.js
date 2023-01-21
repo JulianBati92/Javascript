@@ -27,7 +27,7 @@ function getProductosFromAPI() {
   fetch("./productos.json")
     .then((response) => response.json())
     .then((data) => {
-      productos = data.data.map((producto) => {
+      const productos = data.data.map((producto) => {
         return new Producto(
           producto.id,
           producto.nombre,
@@ -35,11 +35,11 @@ function getProductosFromAPI() {
           producto.cantidad
         );
       });
+      localStorage.setItem('productos', JSON.stringify(productos));
+      mostrarProductos();
     })
     .catch((error) => console.log(error));
 }
-
-getProductosFromAPI();
 
 // Recuperar el objeto del local storage:
 
@@ -121,6 +121,10 @@ carrito.forEach((producto) => {
 });
 }
 
+// Llamo a la función para obtener los productos de la API.
+
+getProductosFromAPI();
+
 // Buscar producto en el array de carrito, reduce precio, elimina producto de carrito y actualiza.
 
 function quitarDelCarrito(id) {
@@ -154,3 +158,4 @@ function finalizarCompra() {
   localStorage.setItem('comprasRealizadas', JSON.stringify(carrito));
   window.location.href = "compraRealizada.html";
 }
+
