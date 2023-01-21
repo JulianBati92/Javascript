@@ -27,7 +27,7 @@ function getProductosFromAPI() {
   fetch("./productos.json")
     .then((response) => response.json())
     .then((data) => {
-      productos = data.map((producto) => {
+      productosRecuperados = data.data.map((producto) => {
         return new Producto(
           producto.id,
           producto.nombre,
@@ -35,9 +35,12 @@ function getProductosFromAPI() {
           producto.cantidad
         );
       });
+      mostrarProductos();
     })
     .catch((error) => console.log(error));
 }
+
+getProductosFromAPI();
 
 // Recuperar el objeto del local storage:
 
