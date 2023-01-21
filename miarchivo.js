@@ -13,25 +13,19 @@ class Producto {
 
 //Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
 
-fetch("./productos.json")
-  .then((response) => response.json())
-  .then((data) => {
-    const productos = data.map((producto) => {
-      return new Producto(
-        producto.id,
-        producto.nombre,
-        producto.precio,
-        producto.cantidad
-      );
-    });
+function getProductos() {
+  return fetch(url)
+  .then(res => res.json())
+  .then(data => console.log(data))
+}
 
 //Funcion para obtener los productos de la API:
 
 function getProductosFromAPI() {
-  const apiKey = "MI_CONTRASENA";
-    get ("productos.json")
-    .then((response) => {
-      productos = response.data.data.map((producto) => {
+  fetch("./productos.json")
+    .then((response) => response.json())
+    .then((data) => {
+      productos = data.data.map((producto) => {
         return new Producto(
           producto.id,
           producto.nombre,
@@ -42,7 +36,6 @@ function getProductosFromAPI() {
     })
     .catch((error) => console.log(error));
 }
-
 // Recuperar el objeto del local storage:
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
