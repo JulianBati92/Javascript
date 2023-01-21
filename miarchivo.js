@@ -49,6 +49,7 @@ const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
 //Muestro los productos modificando el DOM.
 
+const cargarProductosBtn = document.getElementById('cargarProductos');
 const contenedorProductos = document.getElementById('contenedorProductos');
 const verCarritoBtn = document.getElementById('verCarrito');
 const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
@@ -123,9 +124,6 @@ carrito.forEach((producto) => {
 });
 }
 
-// Llamo a la función para obtener los productos de la API.
-
-getProductosFromAPI();
 
 // Buscar producto en el array de carrito, reduce precio, elimina producto de carrito y actualiza.
 
@@ -151,6 +149,7 @@ mostrarCarrito();
 verCarritoBtn.addEventListener("click", mostrarCarrito);
 vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
 finalizarCompraBtn.addEventListener('click', finalizarCompra);
+cargarProductosBtn.addEventListener('click', getProductosFromAPI);
 mostrarProductos();
 
 //Finaliza la compra hecha por el cliente.
