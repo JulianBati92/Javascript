@@ -42,9 +42,7 @@ function getProductosFromAPI() {
     .catch((error) => console.log(error));
 }
 
-window.onload = function(){
-    getProductosFromAPI();
-}
+getProductosFromAPI()
 
 // Recuperar el objeto del local storage:
 
