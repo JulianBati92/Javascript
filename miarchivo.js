@@ -26,18 +26,17 @@ function getProductos() {
 let productosRecuperados = [];
 
 function getProductosFromAPI() {
-  fetch("./productos.json")
-    .then((response) => response.json())
-    .then((data) => {
-        if(data.data){
-            productosRecuperados = data.data.map((producto) => {
-                return new Producto(producto.id, producto.nombre, producto.precio, producto.cantidad);
-            });
-        }else{
-            productosRecuperados = data.map((producto) => {
-                return new Producto(producto.id, producto.nombre, producto.precio, producto.cantidad);
-            });
-        }
+  const apiKey = "MI_CONTRASENA";
+    get(`https://miapi.com/api/products?api_key=${apiKey}`)
+    .then((response) => {
+      productos = response.data.data.map((producto) => {
+        return new Producto(
+          producto.id,
+          producto.nombre,
+          producto.precio,
+          producto.cantidad
+        );
+      });
     })
     .catch((error) => console.log(error));
 }
