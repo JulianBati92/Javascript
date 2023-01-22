@@ -41,7 +41,7 @@ const obtenerDatos = ()=> {
      .then(response => response.json())
      .then(resultado => {
          resultado.forEach(producto => {
-              contenedor.innerHTML += `
+              contenedorProductos.innerHTML += `
               <div>
                   <img src="${producto.imagen}" class="card-img-top img-fluid py-3">
                   <div class="card-body">
