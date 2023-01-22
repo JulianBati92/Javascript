@@ -53,6 +53,7 @@ const verCarritoBtn = document.getElementById('verCarrito');
 const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
 const totalCompra = document.getElementById('totalCompra');
 const finalizarCompraBtn = document.getElementById('finalizarCompra');
+const contenedorCarrito = document.getElementById('contenedorCarrito');
 
 let carrito = [];
 let total = 0;
