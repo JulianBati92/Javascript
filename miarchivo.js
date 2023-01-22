@@ -3,23 +3,60 @@ const storage = window.localStorage;
 //Creo la clase Producto, con las propiedades id, nombre, precio y cantidad:
 
 class Producto {
-  constructor(id, nombre, precio, cantidad) {
+  constructor(id, nombre, precio, cantidad, imagen) {
     this.id = id;
     this.nombre = nombre;
     this.precio = precio;
     this.cantidad = cantidad;
+    this.imagen = imagen;
   }
 }
 
+let productosRecuperados;
+
+//Muestro los productos modificando el DOM.
+
+const contenedorProductos = document.getElementById('contenedorProductos');
+const contenedorCarrito = document.getElementById('contenedorCarrito');
+const verCarritoBtn = document.getElementById('verCarrito');
+const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
+const totalCompra = document.getElementById('totalCompra');
+const finalizarCompraBtn = document.getElementById('finalizarCompra');
+
+// Se recupera el carrito desde el localStorage
+
+let carrito = JSON.parse(storage.getItem("carrito")) || [];
+let total = 0;
+
+//Agrega evento click a los botones verCarrito, vaciarCarrito y finalizarCompra
+
+verCarritoBtn.addEventListener('click', mostrarCarrito);
+vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+finalizarCompraBtn.addEventListener('click', finalizarCompra);
+
 //Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
 
-function getProductos() {
-  return fetch("productos.json")
-  .then(response => response.json())
-  .then(data => console.log(data))
+const obtenerDatos = ()=> {
+  fetch("https://github.com/JulianBati92/Javascript/blob/main/productos.json")
+     .then(response => response.json())
+     .then(resultado => {
+         resultado.forEach(producto => {
+              contenedor.innerHTML += `
+              <div>
+                  <img src="${producto.imagen}" class="card-img-top img-fluid py-3">
+                  <div class="card-body">
+                      <h5 class="card-title">${producto.nombre}</h5>
+                      <p class="card-text">$ ${producto.precio}</p>
+                      <button class="btn btn-primary" onclick="agregarAlCarrito(${producto.id})">Agregar al Carrito</button>
+                  </div>
+              </div>`;
+          })
+      })
 }
 
-//Funcion para obtener los productos de la API:
+obtenerDatos();
+
+//Funcion para obtener los productos desde una API 
 
 function getProductosFromAPI() {
   const apiKey = "MI_CONTRASENA";
@@ -30,36 +67,26 @@ function getProductosFromAPI() {
           producto.id,
           producto.nombre,
           producto.precio,
-          producto.cantidad
+          producto.cantidad,
+          producto.imagen
         );
       });
     })
     .catch((error) => console.log(error));
 }
 
-// Recuperar el objeto del local storage:
-const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
-
-//Muestro los productos modificando el DOM.
-
-const contenedorProductos = document.getElementById('contenedorProductos');
-const verCarritoBtn = document.getElementById('verCarrito');
-const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
-const totalCompra = document.getElementById('totalCompra');
-const finalizarCompraBtn = document.getElementById('finalizarCompra');
-
-let carrito = [];
-let total = 0;
-
 // Crea un div para cada producto en el array de productos.
 
 function crearDivProductos(productos) {
+  if(!productos || productos.length === 0){
+    return;
+  }
   return productos.map((producto) => {
     const divProducto = document.createElement('div');
     divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
     divProducto.innerHTML = `
     <div>
-        <img src="img/${producto.id}.jpg" class="card-img-top img-fluid py-3">
+        <img src="${producto.imagen}" class="card-img-top img-fluid py-3">
         <div class="card-body">
             <h5 class="card-title">${producto.nombre}</h5>
             <p class="card-text">$ ${producto.precio}</p>
@@ -73,76 +100,75 @@ function crearDivProductos(productos) {
 // Muestra los productos en el contenedor de productos.
 
 function mostrarProductos() {
-    contenedorProductos.innerHTML = "";
-    const divsProductos = crearDivProductos(productosRecuperados);
-    divsProductos.forEach((divProducto) => {
-        contenedorProductos.appendChild(divProducto);
-    });
+  contenedorProductos.innerHTML = "";
+  if(!productosRecuperados || productosRecuperados.length === 0){
+    return;
+  }
+  const divsProductos = crearDivProductos(productosRecuperados);
+  divsProductos.forEach((divProducto) => {
+  contenedorProductos.appendChild(divProducto);
+  });
 }
-
 
 // Buscar producto en el array de productos recuperados y agrga al carrito actualizando total de compra. Muestra si no hay stock del producto
 
 function agregarAlCarrito(id) {
-  const producto = productosRecuperados.find(p => p.id === id);
-  if (producto.cantidad > 0) {
-    producto.cantidad -= 1;
-    carrito.push(producto);
-    total += producto.precio;
-    totalCompra.innerHTML = total;
-  } else {
-    alert("No hay mas stock de este Matteoli");
-  }
+const producto = productosRecuperados.find(p => p.id === id);
+if (producto.cantidad > 0) {
+  producto.cantidad -= 1;
+  carrito.push(producto);
+  total += producto.precio;
+  totalCompra.innerHTML = total;
+} else {
+  alert("No hay mas stock de este Matteoli");
 }
-
+}
 
 // Recorre el array de carrito para crear una vista para cada producto.
 
 function mostrarCarrito() {
-contenedorCarrito.innerHTML = "";
-carrito.forEach((producto) => {
-    const divProducto = document.createElement('div');
-    divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
-    divProducto.innerHTML = `
-    <div>
-        <img src="img/${producto.id}.jpg" class="card-img-top img-fluid py-3">
-        <div class="card-body">
-            <h5 class="card-title">${producto.nombre}</h5>
-            <p class="card-text">$ ${producto.precio}</p>
-            <button class="btn btn-danger" onclick="quitarDelCarrito(${producto.id})">Quitar del Carrito</button>
-        </div>
-    </div>`;
-    contenedorCarrito.appendChild(divProducto);
-});
-}
-
-// Buscar producto en el array de carrito, reduce precio, elimina producto de carrito y actualiza.
-
-function quitarDelCarrito(id) {
-const productoIndex = carrito.findIndex(p => p.id === id);
-total -= carrito[productoIndex].precio;
-totalCompra.innerHTML = total;
-carrito.splice(productoIndex, 1);
-mostrarCarrito();
+  contenedorCarrito.innerHTML = "";
+  carrito.forEach((producto) => {
+  contenedorCarrito.innerHTML += `
+  <div class="card my-3">
+      <div class="card-body">
+          <h5 class="card-title">${producto.nombre}</h5>
+          <p class="card-text">$ ${producto.precio}</p>
+          <button class="btn btn-danger" onclick="eliminarDelCarrito(${producto.id})">Eliminar</button>
+      </div>
+  </div>`;
+  });
 }
 
 // Vaciar array de carrito.
 
 function vaciarCarrito() {
-carrito = [];
-total = 0;
-totalCompra.innerHTML = total;
-mostrarCarrito();
+  carrito = [];
+  total = 0;
+  totalCompra.innerHTML = total;
+  mostrarCarrito();
 }
 
-// Establecer eventos del mouse para los botones.
+// Buscar producto en el array de carrito, reduce precio, elimina producto de carrito y actualiza.
 
-verCarritoBtn.addEventListener("click", mostrarCarrito);
-vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
-finalizarCompraBtn.addEventListener('click', finalizarCompra);
-mostrarProductos();
+function eliminarDelCarrito(id) {
+  const producto = carrito.find(p => p.id === id);
+  carrito.splice(carrito.indexOf(producto), 1);
+  total -= producto.precio;
+  totalCompra.innerHTML = total;
+  mostrarCarrito();
+}
 
 //Finaliza la compra hecha por el cliente.
+
+function finalizarCompra() {
+  if (carrito.length === 0) {
+  alert("No hay productos en el carrito");
+  } else {
+  alert("Compra finalizada. Total: $" + total);
+  vaciarCarrito();
+  }
+}
 
 function finalizarCompra() {
   const carrito = JSON.parse(localStorage.getItem('carrito'));
