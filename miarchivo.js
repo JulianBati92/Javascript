@@ -3,52 +3,41 @@ const storage = window.localStorage;
 //Creo la clase Producto, con las propiedades id, nombre, precio y cantidad:
 
 class Producto {
-  constructor(id, nombre, precio, cantidad, imagen) {
+  constructor(id, nombre, precio, cantidad) {
     this.id = id;
     this.nombre = nombre;
     this.precio = precio;
     this.cantidad = cantidad;
-    this.imagen = imagen;
   }
 }
 
 //Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
 
-const url ="./productos.json"
-
 function getProductos() {
-  return fetch(url)
-  .then(res => res.json())
+  return fetch("productos.json")
+  .then(response => response.json())
   .then(data => console.log(data))
 }
 
 //Funcion para obtener los productos de la API:
 
 function getProductosFromAPI() {
- fetch("http://localhost:3000/productos")
+  const apiKey = "MI_CONTRASENA";
+    get(`https://miapi.com/api/products?api_key=${apiKey}`)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error('Error al obtener productos de la API');
-      }
-      return response.json();
-    })
-    .then((productos) => {
-      productos.forEach((producto) => {
-        let productoDiv = document.createElement("div");
-        productoDiv.innerHTML = `
-          <img src="./img/${producto.imagen}" alt="${producto.nombre}">
-          <p>${producto.nombre}</p>
-          <p>$${producto.precio}</p>
-          <button class="btn btn-primary" id="agregarAlCarrito">Agregar al carrito</button>
-        `;
-        document.getElementById("contenedorProductos").appendChild(productoDiv);
+      productos = response.data.data.map((producto) => {
+        return new Producto(
+          producto.id,
+          producto.nombre,
+          producto.precio,
+          producto.cantidad
+        );
       });
     })
-    .catch(error => console.log(error)); 
+    .catch((error) => console.log(error));
 }
 
 // Recuperar el objeto del local storage:
-
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
 //Muestro los productos modificando el DOM.
@@ -65,10 +54,6 @@ let total = 0;
 // Crea un div para cada producto en el array de productos.
 
 function crearDivProductos(productos) {
-  if (!productos) {
-    console.log("Productos no encontrados");
-    return;
-  }
   return productos.map((producto) => {
     const divProducto = document.createElement('div');
     divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
@@ -104,11 +89,12 @@ function agregarAlCarrito(id) {
     producto.cantidad -= 1;
     carrito.push(producto);
     total += producto.precio;
-    totalCompra.textContent = total;
+    totalCompra.innerHTML = total;
   } else {
     alert("No hay mas stock de este Matteoli");
   }
 }
+
 
 // Recorre el array de carrito para crear una vista para cada producto.
 
