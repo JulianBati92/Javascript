@@ -75,7 +75,7 @@ function getProductosFromAPI() {
     .catch((error) => console.log(error));
 }
 
-// Crea un div para cada producto en el array de productos.
+let productos = [];
 
 // Crea un div para cada producto en el array de productos.
 
