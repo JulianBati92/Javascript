@@ -14,14 +14,13 @@ class Producto {
 
 //Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
 
-let productos = [];
+const url ="./productos.json"
 
-fetch("./productos.json")
-    .then(response => response.json())
-    .then(data => {
-        productos = data;
-        cargarProductos(productos);
-    })
+function getProductos() {
+  return fetch(url)
+  .then(res => res.json())
+  .then(data => console.log(data))
+}
 
 //Funcion para obtener los productos de la API:
 
@@ -34,28 +33,18 @@ function getProductosFromAPI() {
       productos.forEach((producto) => {
         let productoDiv = document.createElement("div");
         productoDiv.innerHTML = `
-          <img src="img/${producto.id}.jpg" alt="${producto.nombre}">
+          <img src="${producto.imagen}" alt="${producto.nombre}">
           <p>${producto.nombre}</p>
           <p>$${producto.precio}</p>
-          <button class="btn btn-primary" id="agregarAlCarrito" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
+          <button class="btn btn-primary" id="agregarAlCarrito">Agregar al carrito</button>
         `;
         document.getElementById("contenedorProductos").appendChild(productoDiv);
       });
     });
-}
+}    
 
-getProductosFromAPI();
-
-let carrito = [];
-let totalCompra = 0;
-
-function agregarAlCarrito(id) {
-  const producto = productos.find(p => p.id === id);
-  if (producto.cantidad > 0) {
-    producto.cantidad -= 1;
-    carrito.push(producto);
-   
 // Recuperar el objeto del local storage:
+
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
 //Muestro los productos modificando el DOM.
