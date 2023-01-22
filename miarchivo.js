@@ -112,10 +112,15 @@ function mostrarProductos() {
 function agregarAlCarrito(id) {
   const producto = productosRecuperados.find(p => p.id === id);
   if (producto.cantidad > 0) {
-    producto.cantidad -= 1;
-    carrito.push(producto);
+    const productoEnCarrito = carrito.find(p => p.id === id);
+    if(productoEnCarrito) {
+      productoEnCarrito.cantidad += 1;
+    } else {
+      producto.cantidad -= 1;
+      carrito.push(producto);
+    }
     total += producto.precio;
-    totalCompra.textContent = total;
+    totalCompra.innerHTML = total;
   } else {
     alert("No hay mas stock de este Matteoli");
   }
@@ -124,21 +129,26 @@ function agregarAlCarrito(id) {
 // Recorre el array de carrito para crear una vista para cada producto.
 
 function mostrarCarrito() {
-contenedorCarrito.innerHTML = "";
-carrito.forEach((producto) => {
-    const divProducto = document.createElement('div');
-    divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
-    divProducto.innerHTML = `
-    <div>
-        <img src="img/${producto.id}.jpg" class="card-img-top img-fluid py-3">
-        <div class="card-body">
-            <h5 class="card-title">${producto.nombre}</h5>
-            <p class="card-text">$ ${producto.precio}</p>
-            <button class="btn btn-danger" onclick="quitarDelCarrito(${producto.id})">Quitar del Carrito</button>
-        </div>
-    </div>`;
-    contenedorCarrito.appendChild(divProducto);
-});
+  if (carrito.length === 0) {
+    alert("No hay productos en el carrito");
+    return;
+  }
+  contenedorCarrito.innerHTML = "";
+  for (let i = 0; i < carrito.length; i++) {
+    const producto = carrito[i];
+    const div = document.createElement('div');
+    div.innerHTML = `<div class="col-12">
+                      <div class="card">
+                        <img src="${producto.imagen}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">${producto.nombre}</h5>
+                          <p class="card-text">Precio: ${producto.precio}</p>
+                          <button class="btn btn-danger" onClick="eliminarDelCarrito(${producto.id})">Eliminar</button>
+                        </div>
+                      </div>
+                    </div>`;
+    contenedorCarrito.appendChild(div);
+  }
 }
 
 // Buscar producto en el array de carrito, reduce precio, elimina producto de carrito y actualiza.
