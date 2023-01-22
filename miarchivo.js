@@ -33,16 +33,27 @@ function getProductosFromAPI() {
       productos.forEach((producto) => {
         let productoDiv = document.createElement("div");
         productoDiv.innerHTML = `
-          <img src="${producto.imagen}" alt="${producto.nombre}">
+          <img src="img/${producto.id}.jpg" alt="${producto.nombre}">
           <p>${producto.nombre}</p>
           <p>$${producto.precio}</p>
-          <button class="btn btn-primary" id="agregarAlCarrito">Agregar al carrito</button>
+          <button class="btn btn-primary" id="agregarAlCarrito" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
         `;
         document.getElementById("contenedorProductos").appendChild(productoDiv);
       });
     });
-}    
+}
 
+getProductosFromAPI();
+
+let carrito = [];
+let totalCompra = 0;
+
+function agregarAlCarrito(id) {
+  const producto = productos.find(p => p.id === id);
+  if (producto.cantidad > 0) {
+    producto.cantidad -= 1;
+    carrito.push(producto);
+   
 // Recuperar el objeto del local storage:
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
