@@ -46,17 +46,23 @@ function getProductosFromAPI() {
 // Recuperar el objeto del local storage:
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
-//Muestro los productos modificando el DOM.
-
-const contenedorProductos = document.getElementById('contenedorProductos');
-const verCarritoBtn = document.getElementById('verCarrito');
-const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
-const totalCompra = document.getElementById('totalCompra');
-const finalizarCompraBtn = document.getElementById('finalizarCompra');
-const contenedorCarrito = document.getElementById('contenedorCarrito');
+let contenedorProductos;
+let verCarritoBtn;
+let vaciarCarritoBtn;
+let totalCompra;
+let finalizarCompraBtn;
 
 let carrito = [];
 let total = 0;
+
+document.addEventListener("DOMContentLoaded", function(){
+    contenedorProductos = document.getElementById('contenedorProductos');
+    verCarritoBtn = document.getElementById('verCarrito');
+    vaciarCarritoBtn = document.getElementById('vaciarCarrito');
+    totalCompra = document.getElementById('totalCompra');
+    finalizarCompraBtn = document.getElementById('finalizarCompra');
+    mostrarProductos();
+});
 
 // Crea un div para cada producto en el array de productos.
 
@@ -92,66 +98,51 @@ function mostrarProductos() {
 
 function agregarAlCarrito(id) {
   const producto = productosRecuperados.find(p => p.id === id);
-  if (producto.cantidad > 0) {
-    producto.cantidad -= 1;
-    carrito.push(producto);
-    total += producto.precio;
-    totalCompra.textContent = total;
-  } else {
-    alert("No hay mas stock de este Matteoli");
+  if(producto.cantidad === 0){
+    alert(`No hay stock del producto ${producto.nombre}`);
+    return;
   }
+  carrito.push(producto);
+  producto.cantidad--;
+  total += producto.precio;
+  totalCompra.innerText = total;
 }
 
-// Recorre el array de carrito para crear una vista para cada producto.
+// Muestra los productos en el carrito y calcula el total de la compra.
 
 function mostrarCarrito() {
-contenedorCarrito.innerHTML = "";
-carrito.forEach((producto) => {
-    const divProducto = document.createElement('div');
-    divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
-    divProducto.innerHTML = `
-    <div>
-        <img src="img/${producto.id}.jpg" class="card-img-top img-fluid py-3">
-        <div class="card-body">
-            <h5 class="card-title">${producto.nombre}</h5>
-            <p class="card-text">$ ${producto.precio}</p>
-            <button class="btn btn-danger" onclick="quitarDelCarrito(${producto.id})">Quitar del Carrito</button>
-        </div>
-    </div>`;
-    contenedorCarrito.appendChild(divProducto);
-});
+    const contenedorCarrito = document.getElementById('contenedorCarrito');
+    contenedorCarrito.innerHTML = "";
+    carrito.forEach((producto) => {
+        const divProducto = document.createElement('div');
+        divProducto.innerHTML = `
+        <div>
+            <img src="img/${producto.id}.jpg" class="img-fluid py-3">
+            <div>
+                <h5>${producto.nombre}</h5>
+                <p>$ ${producto.precio}</p>
+            </div>
+        </div>`;
+        contenedorCarrito.appendChild(divProducto);
+    });
+    const totalCompra = document.getElementById('totalCompra');
+    totalCompra.innerText = carrito.reduce((total, producto) => total + producto.precio, 0);
 }
 
-// Buscar producto en el array de carrito, reduce precio, elimina producto de carrito y actualiza.
-
-function quitarDelCarrito(id) {
-const productoIndex = carrito.findIndex(p => p.id === id);
-total -= carrito[productoIndex].precio;
-totalCompra.innerHTML = total;
-carrito.splice(productoIndex, 1);
-mostrarCarrito();
-}
-
-// Vaciar array de carrito.
+// Vacía el carrito y actualiza el total de la compra.
 
 function vaciarCarrito() {
-carrito = [];
-total = 0;
-totalCompra.innerHTML = total;
-mostrarCarrito();
+    carrito = [];
+    total = 0;
+    mostrarCarrito();
 }
-
-// Establecer eventos del mouse para los botones.
-
-verCarritoBtn.addEventListener("click", mostrarCarrito);
-vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
-finalizarCompraBtn.addEventListener('click', finalizarCompra);
-mostrarProductos();
-
-//Finaliza la compra hecha por el cliente.
+// Finaliza la compra y vacía el carrito.
 
 function finalizarCompra() {
-  const carrito = JSON.parse(localStorage.getItem('carrito'));
-  localStorage.setItem('comprasRealizadas', JSON.stringify(carrito));
-  window.location.href = "compraRealizada.html";
+    alert(`Compra finalizada. Total: $${total}`);
+    vaciarCarrito();
 }
+
+verCarritoBtn.addEventListener('click', mostrarCarrito);
+vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+finalizarCompraBtn.addEventListener('click', finalizarCompra);
