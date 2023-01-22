@@ -47,6 +47,15 @@ function getProductosFromAPI() {
 
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
+// Verificar si productosRecuperados es nulo.
+
+if (!productosRecuperados) {
+  console.log("Productos no encontrados en localstorage");
+  return;
+} else {
+  console.log("Productos encontrados en localstorage", productosRecuperados);
+}
+
 //Muestro los productos modificando el DOM.
 
 const contenedorProductos = document.getElementById('contenedorProductos');
@@ -61,6 +70,11 @@ let total = 0;
 // Crea un div para cada producto en el array de productos.
 
 function crearDivProductos(productos) {
+  // Check if productos is null and handle it accordingly
+  if (!productos) {
+    console.log("Productos no encontrados");
+    return;
+  }
   return productos.map((producto) => {
     const divProducto = document.createElement('div');
     divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
