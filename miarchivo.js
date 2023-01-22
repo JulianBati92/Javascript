@@ -33,7 +33,7 @@ function getProductosFromAPI() {
       productos.forEach((producto) => {
         let productoDiv = document.createElement("div");
         productoDiv.innerHTML = `
-          <img src="${producto.imagen}" alt="${producto.nombre}">
+          <img src="./img/${producto.imagen}" alt="${producto.nombre}">
           <p>${producto.nombre}</p>
           <p>$${producto.precio}</p>
           <button class="btn btn-primary" id="agregarAlCarrito">Agregar al carrito</button>
