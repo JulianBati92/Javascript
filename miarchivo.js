@@ -45,19 +45,11 @@ function getProductosFromAPI() {
       });
     })
     .catch(error => console.log(error)); 
+}
 
 // Recuperar el objeto del local storage:
 
 const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
-
-// Verificar si productosRecuperados es nulo.
-
-if (!productosRecuperados) {
-  console.log("Productos no encontrados en localstorage");
-  return;
-} else {
-  console.log("Productos encontrados en localstorage", productosRecuperados);
-}
 
 //Muestro los productos modificando el DOM.
 
