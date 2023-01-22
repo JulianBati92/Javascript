@@ -113,7 +113,7 @@ function mostrarProductos() {
 // Buscar producto en el array de productos recuperados y agrga al carrito actualizando total de compra. Muestra si no hay stock del producto
 
 function agregarAlCarrito(id) {
-const producto = productosRecuperados.find(p => p.id === id);
+const producto = productos.find(p => p.id === id);
 if (producto.cantidad > 0) {
   producto.cantidad -= 1;
   carrito.push(producto);
