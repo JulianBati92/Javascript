@@ -1,4 +1,5 @@
-const storage = window.localStorage;
+window.onload = function() {
+    const storage = window.localStorage;
 
 //Creo la clase Producto, con las propiedades id, nombre, precio y cantidad:
 
@@ -143,6 +144,7 @@ function finalizarCompra() {
     vaciarCarrito();
 }
 
-verCarritoBtn.addEventListener('click', mostrarCarrito);
-vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
-finalizarCompraBtn.addEventListener('click', finalizarCompra);
+if(verCarritoBtn) verCarritoBtn.addEventListener('click', mostrarCarrito);
+    if(vaciarCarritoBtn) vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+    if(finalizarCompraBtn) finalizarCompraBtn.addEventListener('click', finalizarCompra);
+};
