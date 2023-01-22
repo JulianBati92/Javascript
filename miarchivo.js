@@ -23,7 +23,7 @@ function getProductos() {
 
 function getProductosFromAPI() {
   const apiKey = "MI_CONTRASENA";
-    get(`https://miapi.com/api/products?api_key=${apiKey}`)
+    get(`http://localhost:3000/productos=${apiKey}`)
     .then((response) => {
       productos = response.data.data.map((producto) => {
         return new Producto(
