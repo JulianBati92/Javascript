@@ -25,8 +25,11 @@ function getProductos() {
 //Funcion para obtener los productos de la API:
 
 function getProductosFromAPI() {
-  fetch("http://localhost:3000/productos")
+ fetch("http://localhost:3000/productos")
     .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error al obtener productos de la API');
+      }
       return response.json();
     })
     .then((productos) => {
@@ -40,8 +43,8 @@ function getProductosFromAPI() {
         `;
         document.getElementById("contenedorProductos").appendChild(productoDiv);
       });
-    });
-}    
+    })
+    .catch(error => console.log(error)); 
 
 // Recuperar el objeto del local storage:
 
@@ -70,7 +73,6 @@ let total = 0;
 // Crea un div para cada producto en el array de productos.
 
 function crearDivProductos(productos) {
-  // Check if productos is null and handle it accordingly
   if (!productos) {
     console.log("Productos no encontrados");
     return;
