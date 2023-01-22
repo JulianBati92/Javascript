@@ -56,27 +56,6 @@ const obtenerDatos = ()=> {
 
 obtenerDatos();
 
-//Funcion para obtener los productos desde una API 
-
-function getProductosFromAPI() {
-  const apiKey = "MI_CONTRASENA";
-    get(`http://localhost:3000/productos=${apiKey}`)
-    .then((response) => {
-      productos = response.data.data.map((producto) => {
-        return new Producto(
-          producto.id,
-          producto.nombre,
-          producto.precio,
-          producto.cantidad,
-          producto.imagen
-        );
-      });
-    })
-    .catch((error) => console.log(error));
-}
-
-let productos = [];
-
 // Crea un div para cada producto en el array de productos.
 
 function crearDivProductos(productos) {
