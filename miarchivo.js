@@ -37,7 +37,7 @@ finalizarCompraBtn.addEventListener('click', finalizarCompra);
 //Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
 
 const obtenerDatos = ()=> {
-  fetch("https://github.com/JulianBati92/Javascript/blob/main/productos.json")
+  fetch("https://raw.githubusercontent.com/JulianBati92/Javascript/main/productos.json")
      .then(response => response.json())
      .then(resultado => {
          resultado.forEach(producto => {
