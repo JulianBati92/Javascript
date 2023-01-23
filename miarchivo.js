@@ -89,26 +89,16 @@ function mostrarProductos() {
 // Buscar producto en el array de productos recuperados y agrga al carrito actualizando total de compra. Muestra si no hay stock del producto
 
 function agregarAlCarrito(id) {
-  const producto = productosRecuperados.find(p => p.id === id);
-  if (producto) {
-    if (producto.cantidad > 0) {
-      const productoEnCarrito = carrito.find(p => p.id === id);
-      if(productoEnCarrito) {
-        productoEnCarrito.cantidad += 1;
-      } else {
-        producto.cantidad -= 1;
-        carrito.push(Object.assign({}, producto));
-      }
-      total += producto.precio;
-      totalCompra.innerHTML = total;
-    } else {
-      alert("No hay mas stock de este Matteoli");
-    }
+  const producto = productos.find(p => p.id === id);
+  if (producto.cantidad > 0) {
+    producto.cantidad -= 1;
+    carrito.push(producto);
+    total += producto.precio;
+    totalCompra.innerHTML = total;
   } else {
-    console.log(`No se encontro el producto con id: ${id}`);
+    alert("No hay mas stock de este Matteoli");
   }
-}
-
+  }
 
 // Recorre el array de carrito para crear una vista para cada producto.
 
