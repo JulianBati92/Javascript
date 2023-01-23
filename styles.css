@@ -44,3 +44,19 @@
     font-weight: bold;
     font-size: 1.5rem;
   }
+
+  img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col {
+    flex: 1;
+    margin: 10px;
+}
