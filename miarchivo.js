@@ -12,49 +12,19 @@ class Producto {
   }
 }
 
-let productosRecuperados;
+// Recuperar el objeto del local storage:
+const productosRecuperados = JSON.parse(localStorage.getItem('productos'));
 
 //Muestro los productos modificando el DOM.
 
 const contenedorProductos = document.getElementById('contenedorProductos');
-const contenedorCarrito = document.getElementById('contenedorCarrito');
 const verCarritoBtn = document.getElementById('verCarrito');
 const vaciarCarritoBtn = document.getElementById('vaciarCarrito');
 const totalCompra = document.getElementById('totalCompra');
 const finalizarCompraBtn = document.getElementById('finalizarCompra');
 
-// Se recupera el carrito desde el localStorage
-
-let carrito = JSON.parse(storage.getItem("carrito")) || [];
+let carrito = [];
 let total = 0;
-
-//Agrega evento click a los botones verCarrito, vaciarCarrito y finalizarCompra
-
-verCarritoBtn.addEventListener('click', mostrarCarrito);
-vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
-finalizarCompraBtn.addEventListener('click', finalizarCompra);
-
-//Se utiliza el método fetch para obtener un archivo JSON llamado "productos.json":
-
-const obtenerDatos = ()=> {
-  fetch("https://raw.githubusercontent.com/JulianBati92/Javascript/main/productos.json")
-     .then(response => response.json())
-     .then(resultado => {
-         resultado.forEach(producto => {
-              contenedorProductos.innerHTML += `
-              <div>
-                  <img src="${producto.imagen}" class="card-img-top img-fluid py-3">
-                  <div class="card-body">
-                      <h5 class="card-title">${producto.nombre}</h5>
-                      <p class="card-text">$ ${producto.precio}</p>
-                      <button class="btn btn-primary" onclick="agregarAlCarrito(${producto.id})">Agregar al Carrito</button>
-                  </div>
-              </div>`;
-          })
-      })
-}
-
-obtenerDatos();
 
 // Crea un div para cada producto en el array de productos.
 
@@ -77,52 +47,62 @@ function crearDivProductos(productos) {
 
 // Muestra los productos en el contenedor de productos.
 
-function mostrarProductos() {
-    contenedorProductos.innerHTML = "";
-    const divsProductos = crearDivProductos(productosRecuperados);
-    divsProductos.forEach((divProducto) => {
-        contenedorProductos.appendChild(divProducto);
-    });
+const contenedorProducto = ()=> {
+  fetch("https://raw.githubusercontent.com/JulianBati92/Javascript/main/productos.json")
+     .then(response => response.json())
+     .then(resultado => {
+         resultado.forEach(producto => {
+              contenedorProductos.innerHTML += `
+              <div>
+                  <img src="${producto.imagen}" class="card-img-top img-fluid py-3">
+                  <div class="card-body">
+                      <h5 class="card-title">${producto.nombre}</h5>
+                      <p class="card-text">$ ${producto.precio}</p>
+                      <button class="btn btn-primary" onclick="agregarAlCarrito(${producto.id})">Agregar al Carrito</button>
+                  </div>
+              </div>`;
+          })
+      })
 }
 
+contenedorProducto()
 
 // Buscar producto en el array de productos recuperados y agrga al carrito actualizando total de compra. Muestra si no hay stock del producto
 
 function agregarAlCarrito(id) {
-  const producto = productos.find(p => p.id === id);
-  if (producto.cantidad > 0) {
-    producto.cantidad -= 1;
-    carrito.push(producto);
-    total += producto.precio;
-    totalCompra.innerHTML = total;
-  } else {
-    alert("No hay mas stock de este Matteoli");
-  }
-  }
+  fetch("https://raw.githubusercontent.com/JulianBati92/Javascript/main/productos.json")
+  .then(response => response.json())
+  .then(resultado => {
+      const producto = resultado.find(p => p.id === id);
+      if (producto.cantidad > 0) {
+        producto.cantidad -= 1;
+        carrito.push(producto);
+        total += producto.precio;
+        totalCompra.innerHTML = total;
+      } else {
+        alert("No hay mas stock de este producto");
+      }
+   })
+}
 
 // Recorre el array de carrito para crear una vista para cada producto.
 
 function mostrarCarrito() {
-  if (carrito.length === 0) {
-    alert("No hay productos en el carrito");
-    return;
-  }
-  contenedorCarrito.innerHTML = "";
-  for (let i = 0; i < carrito.length; i++) {
-    const producto = carrito[i];
-    const div = document.createElement('div');
-    div.innerHTML = `<div class="col-12">
-                      <div class="card">
-                        <img src="${producto.imagen}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">${producto.nombre}</h5>
-                          <p class="card-text">Precio: ${producto.precio}</p>
-                          <button class="btn btn-danger" onClick="eliminarDelCarrito(${producto.id})">Eliminar</button>
-                        </div>
-                      </div>
-                    </div>`;
-    contenedorCarrito.appendChild(div);
-  }
+contenedorCarrito.innerHTML = "";
+carrito.forEach((producto) => {
+    const divProducto = document.createElement('div');
+    divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
+    divProducto.innerHTML = `
+    <div>
+        <img src="img/${producto.id}.jpg" class="card-img-top img-fluid py-3">
+        <div class="card-body">
+            <h5 class="card-title">${producto.nombre}</h5>
+            <p class="card-text">$ ${producto.precio}</p>
+            <button class="btn btn-danger" onclick="quitarDelCarrito(${producto.id})">Quitar del Carrito</button>
+        </div>
+    </div>`;
+    contenedorCarrito.appendChild(divProducto);
+});
 }
 
 // Buscar producto en el array de carrito, reduce precio, elimina producto de carrito y actualiza.
@@ -149,7 +129,7 @@ mostrarCarrito();
 verCarritoBtn.addEventListener("click", mostrarCarrito);
 vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
 finalizarCompraBtn.addEventListener('click', finalizarCompra);
-mostrarProductos();
+
 
 //Finaliza la compra hecha por el cliente.
 
